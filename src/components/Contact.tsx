@@ -1,0 +1,95 @@
+import { GithubIcon, LinkedinIcon, MailIcon } from './icons';
+import { Section } from './Section';
+
+const SOCIALS = [
+  { icon: MailIcon, label: 'Email', href: 'mailto:you@example.com' },
+  { icon: GithubIcon, label: 'GitHub', href: 'https://github.com/your-username' },
+  { icon: LinkedinIcon, label: 'LinkedIn', href: 'https://linkedin.com/in/your-profile' },
+];
+
+export function Contact() {
+  return (
+    <Section id="contact">
+      <div style={styles.card}>
+        <p style={styles.eyebrow}>Contact</p>
+        <h2 style={styles.heading}>Have a project in mind?</h2>
+        <p style={styles.subhead}>
+          I'm open to freelance work and new opportunities — reach out and let's talk about what you're building.
+        </p>
+
+        <a href="mailto:you@example.com" className="btn-primary" style={styles.emailBtn}>
+          <MailIcon className="icon-sm" />
+          you@example.com
+        </a>
+
+        <div style={styles.socialRow}>
+          {SOCIALS.map((s) => (
+            <a key={s.label} href={s.href} className="social-link" style={styles.socialLink} aria-label={s.label}>
+              <s.icon className="icon-sm" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+const styles: Record<string, React.CSSProperties> = {
+  card: {
+    background: 'var(--ink)',
+    color: 'var(--surface)',
+    borderRadius: 'var(--radius-lg)',
+    padding: 'clamp(36px, 6vw, 64px)',
+    textAlign: 'center',
+  },
+  eyebrow: {
+    fontSize: 13,
+    fontWeight: 700,
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
+    color: 'var(--highlight)',
+    marginBottom: 14,
+  },
+  heading: {
+    fontSize: 'clamp(26px, 3.6vw, 38px)',
+    fontWeight: 700,
+    letterSpacing: -0.5,
+    marginBottom: 14,
+  },
+  subhead: {
+    fontSize: 15,
+    lineHeight: 1.6,
+    color: 'rgba(248, 248, 245, 0.7)',
+    maxWidth: 460,
+    margin: '0 auto 32px',
+  },
+  emailBtn: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 8,
+    textDecoration: 'none',
+    fontSize: 15,
+    fontWeight: 600,
+    color: 'var(--accent-fg)',
+    background: 'var(--accent)',
+    padding: '14px 28px',
+    borderRadius: 999,
+    marginBottom: 28,
+  },
+  socialRow: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: 12,
+  },
+  socialLink: {
+    width: 42,
+    height: 42,
+    borderRadius: '50%',
+    background: 'rgba(248, 248, 245, 0.1)',
+    color: 'var(--surface)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textDecoration: 'none',
+  },
+};
