@@ -1,22 +1,24 @@
 # Portfolio
 
-Personal portfolio site — Vite + React + TypeScript, plain CSS (no component library), matching `../crm`'s design system exactly (same color tokens, same hand-drawn-SVG icon convention). No backend — 100% static content, deployed as a static site.
+Personal portfolio site — Vite + React + TypeScript, no component library. Structurally matches `../crm`'s actual app-shell UI (collapsible left sidebar rail, grouped nav, topbar), not just its color palette — same `.shell`/`.rail`/`.topbar` CSS classes, ported deliberately, not reinterpreted. No backend — 100% static content.
 
-## Sections
+## Structure
 
-- **Hero** — name/tagline, category chips, CTA buttons.
-- **About** — bio (placeholder copy, needs personalizing).
-- **Projects** — grouped into four modules, filterable: Web, Mobile, Embedded/IoT, Data & Migrations. Real detail for the CRM, attendance app, and admin dashboard (from this session's own work); placeholder scaffolds for the embedded/IoT and Salesforce→Zoho migration entries, since those weren't detailed in conversation — fill in `src/data/projects.ts`.
-- **Skills** — grouped tech tags, `src/data/skills.ts`.
-- **Contact** — email + social links (placeholders in `src/components/Contact.tsx`, update with real ones).
+App-shell layout (`src/App.tsx`'s `Shell`), same shape as `crm`'s: a collapsible `Sidebar` (`src/components/Sidebar.tsx`, mirrors `crm`'s `Rail.tsx`) on the left, a `Topbar` at the top of the content column, and routed screens in between via `react-router-dom`.
+
+Sidebar nav:
+- **About Me** (`/`) — landing page: hero intro, bio, quick links into each module.
+- **Project Modules** (grouped, matching `crm`'s own nav-grouping pattern): **Web** (`/web`), **Mobile** (`/mobile`), **Embedded / IoT** (`/embedded`), **Data & Migrations** (`/data`) — all four routes render the same `ModuleScreen` component, parametrized by category, not four near-identical copies.
+- **Skills** (`/skills`)
+- **Contact** (`/contact`)
 
 ## What still needs filling in
 
 - `src/data/projects.ts` — the two `placeholder: true` entries (embedded/IoT, the Salesforce → Zoho migration) have bracketed `[...]` placeholder copy, not real details.
-- `src/components/About.tsx` — bio paragraph, location, availability.
-- `src/components/Contact.tsx` and `src/components/Nav.tsx` — real email/GitHub/LinkedIn links (currently placeholders).
-- A real portrait photo (Hero currently shows a placeholder box).
-- Project screenshots — deliberately not linked to the real production systems (they hold real client data) — see the project cards' "no public link, for confidentiality" note. Add real screenshots to each card's visual area once you have some, or keep the placeholder if you'd rather not show internal UI.
+- `src/screens/AboutScreen.tsx` — bio paragraph, location, availability.
+- `src/screens/ContactScreen.tsx` and `src/components/Sidebar.tsx` — real email/GitHub/LinkedIn links and your actual name (currently "Your Name" / placeholders).
+- A real portrait photo (About screen currently shows a placeholder box).
+- Project screenshots — deliberately not linked to the real production systems (they hold real client data) — see each project card's "no public link, for confidentiality" note.
 - A favicon — none set yet.
 
 ## Setup
@@ -32,4 +34,4 @@ npm run dev
 npm run build
 ```
 
-Static output in `dist/` — deploy the same way as `../attendance-download`/`../attendance-admin` (e.g. `vercel --prod`).
+Static output in `dist/`, deployed the same way as `../attendance-admin` (`vercel --prod`) — `vercel.json`'s SPA-fallback rewrite is required since this now uses client-side routing (react-router), same reasoning as `attendance-admin`'s own `vercel.json`.

@@ -1,5 +1,4 @@
-import { GithubIcon, LinkedinIcon, MailIcon } from './icons';
-import { Section } from './Section';
+import { GithubIcon, LinkedinIcon, MailIcon } from '../components/icons';
 
 const SOCIALS = [
   { icon: MailIcon, label: 'Email', href: 'mailto:you@example.com' },
@@ -7,30 +6,28 @@ const SOCIALS = [
   { icon: LinkedinIcon, label: 'LinkedIn', href: 'https://linkedin.com/in/your-profile' },
 ];
 
-export function Contact() {
+export function ContactScreen() {
   return (
-    <Section id="contact">
-      <div style={styles.card}>
-        <p style={styles.eyebrow}>Contact</p>
-        <h2 style={styles.heading}>Have a project in mind?</h2>
-        <p style={styles.subhead}>
-          I'm open to freelance work and new opportunities — reach out and let's talk about what you're building.
-        </p>
+    <div style={styles.card}>
+      <p style={styles.eyebrow}>Contact</p>
+      <h1 style={styles.heading}>Have a project in mind?</h1>
+      <p style={styles.subhead}>
+        I'm open to freelance work and new opportunities — reach out and let's talk about what you're building.
+      </p>
 
-        <a href="mailto:you@example.com" className="btn-primary" style={styles.emailBtn}>
-          <MailIcon className="icon-sm" />
-          you@example.com
-        </a>
+      <a href="mailto:you@example.com" className="btn-primary" style={styles.emailBtn}>
+        <MailIcon className="icon-sm" />
+        you@example.com
+      </a>
 
-        <div style={styles.socialRow}>
-          {SOCIALS.map((s) => (
-            <a key={s.label} href={s.href} className="social-link" style={styles.socialLink} aria-label={s.label}>
-              <s.icon className="icon-sm" />
-            </a>
-          ))}
-        </div>
+      <div style={styles.socialRow}>
+        {SOCIALS.map((s) => (
+          <a key={s.label} href={s.href} className="social-link" style={styles.socialLink} aria-label={s.label}>
+            <s.icon className="icon-sm" />
+          </a>
+        ))}
       </div>
-    </Section>
+    </div>
   );
 }
 
@@ -41,6 +38,8 @@ const styles: Record<string, React.CSSProperties> = {
     borderRadius: 'var(--radius-lg)',
     padding: 'clamp(36px, 6vw, 64px)',
     textAlign: 'center',
+    maxWidth: 640,
+    margin: '0 auto',
   },
   eyebrow: {
     fontSize: 13,
@@ -51,7 +50,7 @@ const styles: Record<string, React.CSSProperties> = {
     marginBottom: 14,
   },
   heading: {
-    fontSize: 'clamp(26px, 3.6vw, 38px)',
+    fontSize: 'clamp(24px, 3.2vw, 32px)',
     fontWeight: 700,
     letterSpacing: -0.5,
     marginBottom: 14,
@@ -60,8 +59,8 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 15,
     lineHeight: 1.6,
     color: 'rgba(248, 248, 245, 0.7)',
-    maxWidth: 460,
-    margin: '0 auto 32px',
+    maxWidth: 420,
+    margin: '0 auto 28px',
   },
   emailBtn: {
     display: 'inline-flex',

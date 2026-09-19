@@ -1,8 +1,8 @@
 /* Same design tokens as ../crm/src/styles/theme.css — reused directly, not
-   reinterpreted, since "crm style" was the explicit ask. Warm editorial
-   palette (off-white bg, dark ink, gold accent), Inter typography, the
-   same shadow/focus/scrollbar treatment. Portfolio-specific additions
-   (bigger type scale, radius tokens) live below the ported block. */
+   reinterpreted. Also ports crm's actual app-shell structure (Rail +
+   Topbar + .shell grid, collapsible sidebar, off-canvas mobile drawer at
+   860px) verbatim, since "crm style" means the UI pattern, not just the
+   palette. */
 
 :root {
   color-scheme: light;
@@ -33,33 +33,33 @@
   --purple: #7d5bad;
   --purple-soft: #f1edf6;
 
+  --rail-bg: var(--bg);
+  --rail-bg-active: var(--accent-soft);
+  --rail-text: var(--ink);
+  --rail-text-muted: var(--ink-muted);
+  --rail-accent: var(--accent-text);
+  --rail-border: var(--border);
+
   --shadow-xs: 0 1px 2px rgba(27, 31, 35, 0.08);
   --shadow-sm: 0 1px 2px rgba(27, 31, 35, 0.08), 0 4px 12px rgba(27, 31, 35, 0.06);
   --shadow-md: 0 8px 24px rgba(27, 31, 35, 0.1);
   --shadow-lg: 0 8px 32px rgba(27, 31, 35, 0.12);
   --shadow-xl: 0 8px 24px rgba(27, 31, 35, 0.12);
 
-  /* Portfolio-specific: crm is a dense data app (14px base); a portfolio
-     needs real typographic scale/rhythm for a hero/section-driven page. */
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 22px;
-  --container: 1120px;
-  --section-gap: clamp(64px, 10vw, 128px);
+  --section-gap: clamp(48px, 7vw, 88px);
 }
 
 * {
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 html,
 body,
 #root {
-  min-height: 100%;
+  height: 100%;
 }
 
 body {
@@ -67,7 +67,7 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -82,9 +82,6 @@ p {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
   * {
     transition: none !important;
     animation: none !important;
@@ -131,9 +128,267 @@ button {
   font-family: inherit;
 }
 
-/* Utility classes — only for what inline React.CSSProperties objects can't
-   express (hover, media queries). Everything else stays inline per
-   component, matching ../attendance-admin's convention. */
+/* ---------------------------------------------------------------------
+   App shell — ported from ../crm/src/styles/theme.css's .shell/.rail/
+   .topbar rules verbatim (same class names, same values), not
+   reinterpreted.
+   --------------------------------------------------------------------- */
+
+.shell {
+  display: grid;
+  grid-template-columns: 232px 1fr;
+  min-height: 100vh;
+  transition: grid-template-columns 0.18s ease;
+}
+
+.shell-rail-collapsed {
+  grid-template-columns: 72px 1fr;
+}
+
+.content-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.main {
+  padding: 28px 36px 40px;
+  flex: 1;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 20px;
+  background: var(--rail-bg);
+  border-bottom: 1px solid var(--rail-border);
+  flex-shrink: 0;
+}
+
+.topbar-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.topbar-menu-btn:hover {
+  color: var(--ink);
+  background: var(--surface-raised);
+}
+
+.topbar-menu-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.rail-backdrop {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .shell,
+  .shell-rail-collapsed {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar-menu-btn {
+    display: flex;
+  }
+
+  .rail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 260px;
+    max-width: 82vw;
+    z-index: 60;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .rail.rail-mobile-open {
+    transform: translateX(0);
+  }
+
+  .rail-collapse-toggle {
+    display: none;
+  }
+
+  .rail-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(27, 31, 35, 0.4);
+    z-index: 55;
+  }
+}
+
+.rail {
+  background: var(--rail-bg);
+  color: var(--rail-text);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+  border-right: 1px solid var(--rail-border);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.rail-collapsed {
+  padding: 20px 10px;
+  align-items: center;
+}
+
+.rail-header {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.rail-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 4px 8px 18px;
+}
+
+.rail-brand-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.rail-brand-name {
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.rail-collapse-toggle {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: none;
+  color: var(--rail-text-muted);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.rail-collapse-toggle:hover {
+  background: var(--accent-soft);
+  color: var(--rail-text);
+}
+
+.rail-collapse-toggle svg {
+  width: 19px;
+  height: 19px;
+}
+
+.rail-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rail-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--rail-text-muted);
+  font-weight: 500;
+  font-size: 13.5px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.rail-group-label {
+  padding: 14px 10px 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rail-text-muted);
+  opacity: 0.7;
+}
+
+.rail-divider {
+  height: 1px;
+  margin: 6px 4px;
+  background: var(--rail-border);
+}
+
+.rail-collapsed .rail-divider {
+  margin: 6px 8px;
+}
+
+.rail-link svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+.rail-collapsed .rail-nav {
+  width: 100%;
+}
+
+.rail-collapsed .rail-link {
+  justify-content: center;
+  padding: 10px;
+}
+
+.rail-link:hover {
+  background: var(--accent-soft);
+  color: var(--rail-text);
+}
+
+.rail-link[aria-current='page'] {
+  background: var(--rail-bg-active);
+  color: var(--rail-text);
+  box-shadow: inset 2px 0 0 var(--rail-accent);
+}
+
+.rail-footer {
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+/* ---------------------------------------------------------------------
+   Other utility classes (unrelated to the shell) — only what inline
+   React.CSSProperties objects can't express.
+   --------------------------------------------------------------------- */
 
 .icon-sm {
   width: 16px;
@@ -146,15 +401,6 @@ button {
   flex-shrink: 0;
 }
 
-.nav-link {
-  position: relative;
-  text-decoration: none;
-  transition: color 150ms ease;
-}
-.nav-link:hover {
-  color: var(--accent-text);
-}
-
 .btn-primary {
   transition: transform 150ms ease, box-shadow 150ms ease;
 }
@@ -163,24 +409,12 @@ button {
   box-shadow: var(--shadow-md);
 }
 
-.btn-secondary {
-  transition: background 150ms ease, border-color 150ms ease;
-}
-.btn-secondary:hover {
-  background: var(--accent-soft);
-  border-color: var(--accent-text);
-}
-
 .project-card {
   transition: transform 200ms ease, box-shadow 200ms ease;
 }
 .project-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
-}
-
-.filter-chip {
-  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
 }
 
 .social-link {
@@ -192,23 +426,16 @@ button {
   transform: translateY(-2px);
 }
 
-.nav-mobile-toggle {
-  display: none;
-}
-
-@media (max-width: 760px) {
-  .nav-links {
-    display: none;
-  }
-  .nav-mobile-toggle {
-    display: inline-flex;
-  }
+@media (max-width: 640px) {
   .hero-grid {
     grid-template-columns: 1fr !important;
   }
   .hero-portrait {
     order: -1;
-    max-width: 220px !important;
+    max-width: 200px !important;
     margin: 0 auto;
+  }
+  .main {
+    padding: 20px 18px 32px !important;
   }
 }

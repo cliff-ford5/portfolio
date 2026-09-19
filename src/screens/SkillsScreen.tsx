@@ -1,16 +1,15 @@
 import { SKILL_GROUPS } from '../data/skills';
-import { Section } from './Section';
 
-export function Skills() {
+export function SkillsScreen() {
   return (
-    <Section id="skills">
+    <div>
       <p style={styles.eyebrow}>Skills</p>
-      <h2 style={styles.heading}>What I work with</h2>
+      <h1 style={styles.heading}>What I work with</h1>
 
       <div style={styles.grid}>
         {SKILL_GROUPS.map((group) => (
           <div key={group.title} style={styles.card}>
-            <h3 style={styles.groupTitle}>{group.title}</h3>
+            <h2 style={styles.groupTitle}>{group.title}</h2>
             <div style={styles.tagRow}>
               {group.items.map((item) => (
                 <span key={item} style={styles.tag}>
@@ -21,7 +20,7 @@ export function Skills() {
           </div>
         ))}
       </div>
-    </Section>
+    </div>
   );
 }
 
@@ -35,10 +34,10 @@ const styles: Record<string, React.CSSProperties> = {
     marginBottom: 10,
   },
   heading: {
-    fontSize: 'clamp(26px, 3.4vw, 36px)',
+    fontSize: 'clamp(24px, 3.2vw, 32px)',
     fontWeight: 700,
     letterSpacing: -0.5,
-    marginBottom: 36,
+    marginBottom: 32,
   },
   grid: {
     display: 'grid',

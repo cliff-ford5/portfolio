@@ -84,14 +84,6 @@ export function ArrowRightIcon({ className }: IconProps) {
   );
 }
 
-export function PlayIcon({ className }: IconProps) {
-  return (
-    <svg {...base} className={className}>
-      <path d="M6 4.5v15l13-7.5-13-7.5Z" />
-    </svg>
-  );
-}
-
 export function ImageIcon({ className }: IconProps) {
   return (
     <svg {...base} className={className}>
@@ -107,6 +99,49 @@ export function LockIcon({ className }: IconProps) {
     <svg {...base} className={className}>
       <rect x="4.5" y="10.5" width="15" height="10" rx="2" />
       <path d="M8 10.5V7a4 4 0 0 1 8 0v3.5" />
+    </svg>
+  );
+}
+
+export function HomeIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="m3 11 9-8 9 8" />
+      <path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10" />
+    </svg>
+  );
+}
+
+export function StarIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="m12 2 2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7L5.8 21l1.6-7-5.4-4.7 7.1-.6Z" />
+    </svg>
+  );
+}
+
+export function MenuIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  );
+}
+
+export function ChevronsLeftIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="m11 17-5-5 5-5" />
+      <path d="m18 17-5-5 5-5" />
+    </svg>
+  );
+}
+
+export function ChevronsRightIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="m6 17 5-5-5-5" />
+      <path d="m13 17 5-5-5-5" />
     </svg>
   );
 }
