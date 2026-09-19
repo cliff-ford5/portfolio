@@ -6,6 +6,10 @@ const SOCIALS = [
   { icon: LinkedinIcon, label: 'LinkedIn', href: 'https://linkedin.com/in/your-profile' },
 ];
 
+// The one place the gradient covers a whole surface, not just text/borders
+// — a deliberate "wow" moment for the CTA, not overused elsewhere on the
+// site. White-on-gradient inverts the usual button colors (white pill,
+// dark text) since a gradient-on-gradient button would disappear.
 export function ContactScreen() {
   return (
     <div style={styles.card}>
@@ -33,20 +37,21 @@ export function ContactScreen() {
 
 const styles: Record<string, React.CSSProperties> = {
   card: {
-    background: 'var(--ink)',
-    color: 'var(--surface)',
+    background: 'var(--accent-gradient)',
+    color: '#ffffff',
     borderRadius: 'var(--radius-lg)',
     padding: 'clamp(36px, 6vw, 64px)',
     textAlign: 'center',
     maxWidth: 640,
     margin: '0 auto',
+    boxShadow: '0 24px 64px var(--accent-glow)',
   },
   eyebrow: {
     fontSize: 13,
     fontWeight: 700,
     letterSpacing: 1.2,
     textTransform: 'uppercase',
-    color: 'var(--highlight)',
+    color: 'rgba(255, 255, 255, 0.85)',
     marginBottom: 14,
   },
   heading: {
@@ -54,11 +59,12 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 700,
     letterSpacing: -0.5,
     marginBottom: 14,
+    color: '#ffffff',
   },
   subhead: {
     fontSize: 15,
     lineHeight: 1.6,
-    color: 'rgba(248, 248, 245, 0.7)',
+    color: 'rgba(255, 255, 255, 0.85)',
     maxWidth: 420,
     margin: '0 auto 28px',
   },
@@ -68,9 +74,9 @@ const styles: Record<string, React.CSSProperties> = {
     gap: 8,
     textDecoration: 'none',
     fontSize: 15,
-    fontWeight: 600,
-    color: 'var(--accent-fg)',
-    background: 'var(--accent)',
+    fontWeight: 700,
+    color: 'var(--accent-from)',
+    background: '#ffffff',
     padding: '14px 28px',
     borderRadius: 999,
     marginBottom: 28,
@@ -84,8 +90,8 @@ const styles: Record<string, React.CSSProperties> = {
     width: 42,
     height: 42,
     borderRadius: '50%',
-    background: 'rgba(248, 248, 245, 0.1)',
-    color: 'var(--surface)',
+    background: 'rgba(255, 255, 255, 0.16)',
+    color: '#ffffff',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

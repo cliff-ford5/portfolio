@@ -1,50 +1,61 @@
-/* Same design tokens as ../crm/src/styles/theme.css — reused directly, not
-   reinterpreted. Also ports crm's actual app-shell structure (Rail +
-   Topbar + .shell grid, collapsible sidebar, off-canvas mobile drawer at
-   860px) verbatim, since "crm style" means the UI pattern, not just the
-   palette. */
+/* Dark, vivid theme — client-facing portfolio, not an internal tool, so
+   this deliberately departs from ../crm's actual warm-beige palette (kept
+   crm's *structure* — .shell/.rail/.topbar — but not its colors here).
+   Deep charcoal base, indigo -> cyan gradient accent used deliberately
+   (hero heading, primary buttons, active nav), built to read as
+   technically confident to a business audience evaluating whether to
+   hire — most B2B software already leans blue/indigo for exactly that
+   trust signal. */
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
-  --bg: #ededea;
-  --surface: #f8f8f5;
-  --surface-raised: #ffffff;
-  --border: #d2d5ce;
-  --ink: #1b1f23;
-  --ink-muted: #5c636b;
-  --ink-faint: #656b73;
-  --accent: #d4a72c;
-  --accent-fg: #14120a;
-  --accent-text: #906300;
-  --accent-soft: #f3eee3;
-  --highlight: #f3c63a;
-  --highlight-soft: #f5ecd2;
-  --danger: #af3a2b;
-  --danger-soft: #f0dad7;
-  --success: #3a7855;
-  --success-soft: #e9f0ec;
-  --warning: #985d00;
-  --warning-soft: #f2eade;
-  --info: #27476b;
-  --info-soft: #d6dce3;
-  --teal: #0c7a68;
-  --teal-soft: #e4f0ee;
-  --purple: #7d5bad;
-  --purple-soft: #f1edf6;
+  --bg: #0a0a10;
+  --surface: #111118;
+  --surface-raised: #17171f;
+  --surface-overlay: #1d1d27;
+  --border: #26262f;
+  --border-strong: #33333f;
+  --ink: #f2f2f6;
+  --ink-muted: #a3a3b2;
+  --ink-faint: #6f6f80;
 
-  --rail-bg: var(--bg);
+  --accent-from: #6366f1;
+  --accent-to: #22d3ee;
+  --accent-gradient: linear-gradient(135deg, var(--accent-from), var(--accent-to));
+  --accent: #6366f1;
+  --accent-fg: #ffffff;
+  --accent-text: #a5b4fc;
+  --accent-soft: rgba(99, 102, 241, 0.14);
+  --accent-glow: rgba(99, 102, 241, 0.35);
+
+  --highlight: #22d3ee;
+  --highlight-soft: rgba(34, 211, 238, 0.14);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.14);
+  --success: #4ade80;
+  --success-soft: rgba(74, 222, 128, 0.14);
+  --warning: #fbbf24;
+  --warning-soft: rgba(251, 191, 36, 0.14);
+  --info: #60a5fa;
+  --info-soft: rgba(96, 165, 250, 0.14);
+  --teal: #2dd4bf;
+  --teal-soft: rgba(45, 212, 191, 0.14);
+  --purple: #a78bfa;
+  --purple-soft: rgba(167, 139, 250, 0.14);
+
+  --rail-bg: var(--surface);
   --rail-bg-active: var(--accent-soft);
   --rail-text: var(--ink);
   --rail-text-muted: var(--ink-muted);
   --rail-accent: var(--accent-text);
   --rail-border: var(--border);
 
-  --shadow-xs: 0 1px 2px rgba(27, 31, 35, 0.08);
-  --shadow-sm: 0 1px 2px rgba(27, 31, 35, 0.08), 0 4px 12px rgba(27, 31, 35, 0.06);
-  --shadow-md: 0 8px 24px rgba(27, 31, 35, 0.1);
-  --shadow-lg: 0 8px 32px rgba(27, 31, 35, 0.12);
-  --shadow-xl: 0 8px 24px rgba(27, 31, 35, 0.12);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.55);
 
   --radius-sm: 8px;
   --radius-md: 14px;
@@ -101,7 +112,7 @@ p {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+  scrollbar-color: var(--border-strong) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -114,7 +125,7 @@ p {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--border);
+  background-color: var(--border-strong);
   border-radius: 999px;
   border: 2px solid var(--bg);
   background-clip: padding-box;
@@ -129,9 +140,7 @@ button {
 }
 
 /* ---------------------------------------------------------------------
-   App shell — ported from ../crm/src/styles/theme.css's .shell/.rail/
-   .topbar rules verbatim (same class names, same values), not
-   reinterpreted.
+   App shell — same .shell/.rail/.topbar structure as ../crm, dark colors.
    --------------------------------------------------------------------- */
 
 .shell {
@@ -154,6 +163,7 @@ button {
 .main {
   padding: 28px 36px 40px;
   flex: 1;
+  position: relative;
 }
 
 .topbar {
@@ -230,7 +240,7 @@ button {
     display: block;
     position: fixed;
     inset: 0;
-    background: rgba(27, 31, 35, 0.4);
+    background: rgba(0, 0, 0, 0.6);
     z-index: 55;
   }
 }
@@ -270,7 +280,7 @@ button {
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background: var(--accent);
+  background: var(--accent-gradient);
   color: var(--accent-fg);
   display: flex;
   align-items: center;
@@ -279,6 +289,7 @@ button {
   font-weight: 700;
   letter-spacing: 0.5px;
   flex-shrink: 0;
+  box-shadow: 0 0 24px var(--accent-glow);
 }
 
 .rail-brand-name {
@@ -377,7 +388,7 @@ button {
 .rail-link[aria-current='page'] {
   background: var(--rail-bg-active);
   color: var(--rail-text);
-  box-shadow: inset 2px 0 0 var(--rail-accent);
+  box-shadow: inset 2px 0 0 0 var(--accent-from);
 }
 
 .rail-footer {
@@ -386,8 +397,30 @@ button {
 }
 
 /* ---------------------------------------------------------------------
-   Other utility classes (unrelated to the shell) — only what inline
-   React.CSSProperties objects can't express.
+   Gradient / glow effects — the "livelier" pass. Used deliberately, not
+   everywhere: hero heading, primary CTAs, active states.
+   --------------------------------------------------------------------- */
+
+.gradient-text {
+  background-image: var(--accent-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.glow-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------------------------------------------------------------------
+   Other utility classes — only what inline React.CSSProperties objects
+   can't express.
    --------------------------------------------------------------------- */
 
 .icon-sm {
@@ -406,22 +439,27 @@ button {
 }
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 28px var(--accent-glow);
 }
 
 .project-card {
-  transition: transform 200ms ease, box-shadow 200ms ease;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
 }
 .project-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
+  border-color: var(--border-strong);
+}
+
+.module-card:hover {
+  border-color: var(--accent-from) !important;
 }
 
 .social-link {
   transition: background 150ms ease, color 150ms ease, transform 150ms ease;
 }
 .social-link:hover {
-  background: var(--accent);
+  background: var(--accent-gradient);
   color: var(--accent-fg);
   transform: translateY(-2px);
 }

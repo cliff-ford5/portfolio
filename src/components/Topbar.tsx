@@ -21,7 +21,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 13,
     fontWeight: 600,
     color: 'var(--accent-fg)',
-    background: 'var(--accent)',
+    background: 'var(--accent-gradient)',
     padding: '9px 18px',
     borderRadius: 999,
   },

@@ -12,9 +12,14 @@ export function AboutScreen() {
   return (
     <div>
       <div className="hero-grid" style={styles.heroGrid}>
-        <div>
+        <span style={styles.glowBlobOne} className="glow-blob" aria-hidden="true" />
+        <span style={styles.glowBlobTwo} className="glow-blob" aria-hidden="true" />
+
+        <div style={styles.heroText}>
           <p style={styles.eyebrow}>Full-stack developer</p>
-          <h1 style={styles.heading}>I build real infrastructure for real businesses.</h1>
+          <h1 style={styles.heading}>
+            I build real <span className="gradient-text">infrastructure</span> for real businesses.
+          </h1>
           <p style={styles.subhead}>
             From data migrations to custom software to full mobile and web products — I design and ship systems
             businesses actually run on, not demos.
@@ -67,7 +72,7 @@ export function AboutScreen() {
         <h2 style={styles.sectionHeading}>Explore my work</h2>
         <div style={styles.moduleGrid}>
           {MODULE_LINKS.map((m) => (
-            <Link key={m.to} to={m.to} className="project-card" style={styles.moduleCard}>
+            <Link key={m.to} to={m.to} className="project-card module-card" style={styles.moduleCard}>
               <div style={{ ...styles.moduleIcon, background: `${m.color}1A`, color: m.color }}>
                 <m.icon className="icon-sm" />
               </div>
@@ -83,11 +88,31 @@ export function AboutScreen() {
 
 const styles: Record<string, React.CSSProperties> = {
   heroGrid: {
+    position: 'relative',
     display: 'grid',
     gridTemplateColumns: '1.2fr 0.8fr',
     gap: 40,
     alignItems: 'center',
     marginBottom: 64,
+    paddingTop: 8,
+  },
+  heroText: {
+    position: 'relative',
+    zIndex: 1,
+  },
+  glowBlobOne: {
+    top: -80,
+    left: -60,
+    width: 340,
+    height: 340,
+    background: 'var(--accent-from)',
+  },
+  glowBlobTwo: {
+    top: 60,
+    right: 40,
+    width: 280,
+    height: 280,
+    background: 'var(--accent-to)',
   },
   eyebrow: {
     fontSize: 13,
@@ -122,11 +147,13 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 14,
     fontWeight: 600,
     color: 'var(--accent-fg)',
-    background: 'var(--accent)',
+    background: 'var(--accent-gradient)',
     padding: '13px 24px',
     borderRadius: 999,
   },
   portrait: {
+    position: 'relative',
+    zIndex: 1,
     display: 'flex',
     justifyContent: 'center',
   },
